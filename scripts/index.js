@@ -24,13 +24,17 @@ function cardCreate(cardData, deleteCardCallback) {
   
 
     cardTitle.textContent = cardData.name;
+    cardImage.alt = cardData.name;
     cardImage.src = cardData.link;
 
 
-  deleteButton.addEventListener('click', function () {
-    deleteCardCallback(this.parentNode);
-});
 
+    deleteButton.addEventListener('click', function (evt) {
+      const card = evt.target.closest('.card');
+      if (card) {
+          deleteCardCallback(card);
+      }
+  });
 
   return cardElement;
 }
