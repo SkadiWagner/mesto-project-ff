@@ -1,15 +1,11 @@
-   export {cardCreate, likeButtonFunction, deleteCard}
-   
-   //  функция создания карточки
+export {cardCreate, likeButtonFunction, deleteCard} 
+    
+//  функция создания карточки 
 
-  function cardCreate(cardData, deleteCardCallback, likeButtonCallback, openImageCallback) {
+function cardCreate(cardData, deleteCardCallback, likeButtonCallback, openImageCallback) { 
 
-    const cardTemplate = document.querySelector('#card-template');
-  
-  
-    const cardElement = cardTemplate.content.cloneNode(true); 
-  
-  
+    const cardTemplate = document.querySelector('#card-template'); 
+    const cardElement = cardTemplate.content.cloneNode(true).querySelector('.card');
     const cardImage = cardElement.querySelector('.card__image');
     const cardTitle = cardElement.querySelector('.card__title');
     const deleteButton = cardElement.querySelector('.card__delete-button');
@@ -20,23 +16,16 @@
     cardImage.alt = cardData.name;
     cardImage.src = cardData.link;
   
-  
-  
-    deleteButton.addEventListener('click', function (evt) {
-      const card = evt.target.closest('.card');
-      if (card) {
-          deleteCardCallback(card);
-      }
-  });
-  
+    deleteButton.addEventListener('click', function (evt) { 
+          deleteCardCallback(cardElement); 
+  }); 
+
     likeButton.addEventListener('click', function () {
     likeButtonCallback(likeButton);
   });
   
     cardImage.addEventListener('click', () => {
-      const imageSrc = cardImage.getAttribute('src');
-      const caption = cardImage.getAttribute('alt');
-      openImageCallback(imageSrc, caption);
+      openImageCallback(cardData.link, cardData.name);
     })
   
   return cardElement;
@@ -50,7 +39,7 @@
 
   // функция удаления карточки
 
-     function deleteCard(cardElement) {
+  function deleteCard(cardElement) {
     cardElement.remove();
   }
 
