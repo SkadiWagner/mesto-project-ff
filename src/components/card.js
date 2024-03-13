@@ -10,6 +10,8 @@ function cardCreate(cardData, deleteCardCallback, likeButtonCallback, openImageC
     const cardTitle = cardElement.querySelector('.card__title');
     const deleteButton = cardElement.querySelector('.card__delete-button');
     const likeButton = cardElement.querySelector('.card__like-button');
+
+    const placesList = document.querySelector('.places__list'); 
   
   
     cardTitle.textContent = cardData.name;
@@ -28,7 +30,7 @@ function cardCreate(cardData, deleteCardCallback, likeButtonCallback, openImageC
       openImageCallback(cardData.link, cardData.name);
     })
   
-  return cardElement;
+    placesList.append(cardElement);
   }
 
   // функция лайка картотчки

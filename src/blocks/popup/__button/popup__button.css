@@ -19,9 +19,23 @@
   cursor: pointer;
 }
 
+.error-active {
+  font-size: 12px;
+  color: red;
+}
+
+.popup__button_disabled {
+  background-color: white;
+  opacity: 0.4;
+  color: black;
+  border: 1px solid black;
+}
+
 @media screen and (max-width: 568px) {
   .popup__button {
     font-size: 14px;
     line-height: 17px;
   }
 }
+
+
