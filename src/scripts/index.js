@@ -29,11 +29,21 @@ const placesList = document.querySelector(".places__list");
 
 // ----
 
+
+
 const popupsList = document.querySelectorAll(".popup");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditPopup = document.querySelector(".popup_type_edit");
 const profileAddButton = document.querySelector(".profile__add-button");
 const newCardPopup = document.querySelector(".popup_type_new-card");
+const deletePopup = document.querySelector('.popup_type_delete');
+
+// обработчик попапа подтверждения удаления карточек 
+
+// deleteButton.addEventListener('click', () => {
+//   openModal(deletePopup);
+// })
+
 
 // обработчик кнопки открытия редактирования профиля
 
@@ -128,8 +138,6 @@ const placeName = newCardPopup.querySelector(".popup__input_type_card-name");
 const imageUrl = newCardPopup.querySelector(".popup__input_type_url");
 const newCardForm = document.querySelector('[name="new-place"]');
 
-
-
 function createNewCard(evt) {
   evt.preventDefault();
 
@@ -150,7 +158,6 @@ function createNewCard(evt) {
     } return Promise.reject(res.status);
   })
   .then((card) => {
-    debugger;
     addCard(card);
   })
 
@@ -158,8 +165,8 @@ function createNewCard(evt) {
 }
 
 function addCard(newCardData) {
-  const newCardElement = cardCreate(newCardData, deleteCard, likeButtonFunction, openImage)
-  placesList.prepend(newCardElement);
+  const card = cardCreate(newCardData, deleteCard, likeButtonFunction, openImage)
+  placesList.prepend(card);
   placeName.value = "";
   imageUrl.value = "";
 }
@@ -293,7 +300,7 @@ function initializeProfile() {
 
 initializeProfile();
 
-// Загрузка карточек с сервера
+// инициализация карточек
 
 function initializeCards() {
   fetch("https://nomoreparties.co/v1/wff-cohort-8/cards", {
@@ -306,10 +313,22 @@ function initializeCards() {
     })
     .then((data) => {
       data.forEach((cardData) => {
-        cardCreate(cardData, deleteCard, likeButtonFunction, openImage);
-        console.log(data);
+        const card = cardCreate(cardData, deleteCard, likeButtonFunction, openImage)
+        placesList.prepend(card);
+        const likesArray = cardData.likes;
+        const likesCount = likesArray.length;
+        const likeCount = document.querySelector('.like-count');
+        likeCount.textContent = likesCount; 
       });
     });
 }
 
 initializeCards();
+
+
+// getCards.then(data => {
+//   data.forEach((cardData) => {
+//     const card = cardCreate(cardData)
+//     placesList.prepend(card);
+//   })
+// })
