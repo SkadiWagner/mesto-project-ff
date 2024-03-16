@@ -238,7 +238,6 @@ function initializeProfile() {
     profileTitle.textContent = data.name;
     profileDescription.textContent = data.about;
     profileImage.style.backgroundImage = `url(${data.avatar})`;
-    console.log(data)
     userId = data._id
     initializeCards();
   })
