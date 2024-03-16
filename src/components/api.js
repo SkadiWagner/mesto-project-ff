@@ -8,10 +8,14 @@ function getCardData() {
           authorization: "a6a35dc9-40f1-4005-a8ef-c23ae2740d6c",
         },
       })
-        .then((res) => {
+      .then((res) => {
+        if (res.ok) {
           return res.json();
-        })
-}
+        } else {
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
+      })
+  }
 
 
 // запрос на создание новой карточки
@@ -29,9 +33,11 @@ function postNewCard(placeName, imageUrl) {
     }),
   })
   .then((res) => {
-    if(res.ok) {
-      return res.json()
-    } return Promise.reject(res.status);
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
   })
 }
 
@@ -43,10 +49,14 @@ function getUserData() {
           authorization: "a6a35dc9-40f1-4005-a8ef-c23ae2740d6c",
         },
       })
-        .then((res) => {
+      .then((res) => {
+        if (res.ok) {
           return res.json();
-        })
-}
+        } else {
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
+      })
+  }
 
 // запрос на редактирование профиля
 
@@ -62,13 +72,13 @@ function editProfileRequest(nameInput, jobInput) {
       about: jobInput,
     }),
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+  })
 }
 
 // запрос на удаление карточек
@@ -82,9 +92,11 @@ function deleteCardRequest(cardId) {
     },
   })
   .then((res) => {
-    if(res.ok) {
-      return res.json()
-    } return Promise.reject(res.status);
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
   })
 }
 
@@ -99,9 +111,11 @@ function cardLikeRequest(cardId) {
     },
   })
   .then((res) => {
-    if(res.ok) {
-      return res.json()
-    } return Promise.reject(res.status);
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
   })
 }
 
@@ -116,13 +130,15 @@ function cardDeleteLikeRequest(cardId) {
     },
   })
   .then((res) => {
-    if(res.ok) {
-      return res.json()
-    } return Promise.reject(res.status);
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
   })
 }
 
-// запрос на изминение аватарки
+// запрос на редактирование  аватарки
 
 function updateAvatarRequest(urlInput) {
   return fetch("https://nomoreparties.co/v1/wff-cohort-8/users/me/avatar", {
