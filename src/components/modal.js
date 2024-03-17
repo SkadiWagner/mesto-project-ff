@@ -1,6 +1,3 @@
-export {openModal, closeModal}
-
-
 //  логика открытия модалок
 
  function openModal(modalWindow) {
@@ -25,3 +22,5 @@ function closeByEsc(evt) {
       })
     }
   }
+
+export {openModal, closeModal}

@@ -1,5 +1,3 @@
-export { enableValidation, clearValidation, validatorConfig };
-
 const validatorConfig = {
     formSelector: ".popup__form",
     inputSelector: ".popup__input",
@@ -106,3 +104,5 @@ const validatorConfig = {
       error.classList.remove(validatorConfig.errorClass);
     });
   };
+
+export { enableValidation, clearValidation, validatorConfig, toggleButtonState };

@@ -1,5 +1,3 @@
-export {cardCreate} 
-    
 //  функция создания карточки 
 
 function cardCreate(cardData, deleteCardCallback, likeButtonCallback, openImageCallback, ownerId) {
@@ -30,12 +28,13 @@ function cardCreate(cardData, deleteCardCallback, likeButtonCallback, openImageC
     deleteButton.classList.add('card__delete-button-hidden');
   } else {
      deleteButton.addEventListener('click', function (evt) {
+      cardElement.remove();
       deleteCardCallback(cardData._id);
   });
   }
 
   likeButton.addEventListener('click', function () {
-      likeButtonCallback(likeButton, cardData);
+      likeButtonCallback(likeButton, cardData, likeCount);
   });
 
   cardImage.addEventListener('click', () => {
@@ -45,6 +44,8 @@ function cardCreate(cardData, deleteCardCallback, likeButtonCallback, openImageC
   return cardElement;
 }
 
+
+export {cardCreate} 
 
 
 
