@@ -105,4 +105,9 @@ const validatorConfig = {
     });
   };
 
-export { enableValidation, clearValidation, validatorConfig, toggleButtonState };
+  function disableButton (button, validatorConfig) {
+    button.disabled = true
+    button.classList.add(validatorConfig.inactiveButtonClass) 
+  }
+
+export { enableValidation, clearValidation, validatorConfig, disableButton };

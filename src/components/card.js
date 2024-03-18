@@ -28,8 +28,7 @@ function cardCreate(cardData, deleteCardCallback, likeButtonCallback, openImageC
     deleteButton.classList.add('card__delete-button-hidden');
   } else {
      deleteButton.addEventListener('click', function (evt) {
-      cardElement.remove();
-      deleteCardCallback(cardData._id);
+      deleteCardCallback(cardData._id, cardElement);
   });
   }
 

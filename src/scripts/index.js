@@ -2,8 +2,8 @@ import "../pages/index.css";
 import { cardCreate} from "../components/card";
 import { openModal, closeModal } from "../components/modal";
 import { getCardData, getUserData, editProfileRequest, postNewCard, deleteCardRequest, cardLikeRequest, cardDeleteLikeRequest, updateAvatarRequest } from "../components/api"
-import { enableValidation, clearValidation, validatorConfig, toggleButtonState } from "../components/validation";
-import { checkResponse, renderLoading} from "../components/utils"
+import { enableValidation, clearValidation, validatorConfig, disableButton } from "../components/validation";
+import { renderLoading } from "../components/utils"
 
 // Переменные
 
@@ -37,7 +37,7 @@ const imageUrl = newCardPopup.querySelector(".popup__input_type_url"); // имп
 
 
 let userId
-let cards
+
 
 // функици для работы с попапами 
 
@@ -61,7 +61,6 @@ profileImage.addEventListener("click", () => {
 function changeAvatar() {
   renderLoading(newAvatarForm, true);
   updateAvatarRequest(profileImageInput.value)
-    .then(checkResponse)
     .then((data) => {
       profileImage.style.backgroundImage = `url(${data.avatar})`;
       closeModal(newAvatarPopup)
@@ -91,8 +90,7 @@ profileEditButton.addEventListener("click", () => {
 
 profileAddButton.addEventListener("click", () => {
   const button = newCardForm.querySelector('.popup__button')
-  button.disabled = true
-  button.classList.add(validatorConfig.inactiveButtonClass)
+  disableButton(button, validatorConfig)
   openModal(newCardPopup);
   clearValidation(newCardForm, validatorConfig);
 });
@@ -120,7 +118,6 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   renderLoading(profileEditForm, true);
   editProfileRequest(nameInput.value, jobInput.value)
-  .then(checkResponse)
   .then(data => {
     profileTitle.textContent = data.name;
     profileDescription.textContent = data.about;
@@ -142,7 +139,6 @@ function createNewCard(evt) {
   evt.preventDefault();
   renderLoading(newCardForm, true);
   postNewCard(placeName.value, imageUrl.value)
-  .then(checkResponse)
   .then(data => {
     const newCard = cardCreate(data, deleteCardHendler, cardLikeHandler, openImage, userId)
     placesList.prepend(newCard)
@@ -170,9 +166,7 @@ enableValidation(validatorConfig);
 
 function initializeCards() {
   getCardData()
-  .then(checkResponse)
   .then(data => {
-    cards = data
     createCardHendler(data)
   })
   .catch((err) => {
@@ -182,9 +176,11 @@ function initializeCards() {
 
 // удаление карточек
 
-function deleteCardHendler(_id) {
+function deleteCardHendler(_id, cardElement) {
   deleteCardRequest(_id)
-  .then(checkResponse)
+  .then(data => {
+    cardElement.remove(); 
+  })
   .catch((err) => {
     console.error(err);
   })
@@ -205,7 +201,6 @@ function createCardHendler(data) {
 function cardLikeHandler(elem, card, likeCount) {
   if(elem.classList.contains('card__like-button_is-active')) {
   cardDeleteLikeRequest(card._id)
-  .then(checkResponse)
   .then(data => {
     likeCount.textContent = data.likes.length
     elem.classList.remove('card__like-button_is-active')
@@ -215,7 +210,6 @@ function cardLikeHandler(elem, card, likeCount) {
   })
   } else {
     cardLikeRequest(card._id)
-    .then(checkResponse)
     .then(data => {
       likeCount.textContent = data.likes.length
       elem.classList.add('card__like-button_is-active')
@@ -229,7 +223,6 @@ function cardLikeHandler(elem, card, likeCount) {
 
 function initializeProfile() {
   getUserData()
-  .then(checkResponse)
   .then(data => {
     profileTitle.textContent = data.name;
     profileDescription.textContent = data.about;

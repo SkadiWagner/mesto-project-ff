@@ -1,3 +1,5 @@
+import { checkResponse} from "../components/utils.js"
+
 const apiConfig = {
   baseUrl: 'https://nomoreparties.co/v1/wff-cohort-8',
   headers: {
@@ -12,6 +14,7 @@ function getCardData() {
      return fetch(`${apiConfig.baseUrl}/cards`, {
         headers: apiConfig.headers
       })
+      .then(checkResponse)
   }
 
 // запрос на создание новой карточки
@@ -25,6 +28,7 @@ function postNewCard(placeName, imageUrl) {
       link: imageUrl,
     }),
   })
+  .then(checkResponse)
 }
 
 // запрос на получение информации о пользователе
@@ -33,6 +37,7 @@ function getUserData() {
     return fetch(`${apiConfig.baseUrl}/users/me`, {
        headers: apiConfig.headers,
       })
+      .then(checkResponse)
   }
 
 // запрос на редактирование профиля
@@ -46,6 +51,7 @@ function editProfileRequest(nameInput, jobInput) {
       about: jobInput,
     }),
   })
+  .then(checkResponse)
 }
 
 // запрос на удаление карточек
@@ -55,6 +61,7 @@ function deleteCardRequest(cardId) {
     method: "DELETE",
     headers: apiConfig.headers,
   })
+  .then(checkResponse)
 }
 
 // запрос на лайк карточки
@@ -64,6 +71,7 @@ function cardLikeRequest(cardId) {
     method: "PUT",
     headers: apiConfig.headers,
   })
+  .then(checkResponse)
 }
 
 // запрос на удаление лайка
@@ -73,6 +81,7 @@ function cardDeleteLikeRequest(cardId) {
     method: "DELETE",
     headers: apiConfig.headers,
   })
+  .then(checkResponse)
 }
 
 // запрос на редактирование  аватарки
@@ -85,6 +94,7 @@ function updateAvatarRequest(urlInput) {
       avatar: urlInput,
     }),
   })
+  .then(checkResponse)
 }
 
 export {getCardData, getUserData, editProfileRequest, postNewCard, deleteCardRequest, cardLikeRequest, cardDeleteLikeRequest, updateAvatarRequest}
